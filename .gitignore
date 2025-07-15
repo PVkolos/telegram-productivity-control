@@ -2,3 +2,6 @@
 /.idea/
 **/__pycache__/
 /src/123.wav
+credentials.json
+key_calendar.json
+/src/GLOBAL.py

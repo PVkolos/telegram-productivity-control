@@ -36,7 +36,7 @@ async def create_table(email):
     ws = await ss.add_worksheet("Дневная продуктивность", 1000, 1000)
 
     cl = []
-    lst = ['Дата', 'Эмоциональная часть', 'Физическая часть']
+    lst = ['Дата']
     for i in range(len(lst)):
         cl.append(gspread.cell.Cell(1, i + 1, lst[i]))
     await ws.update_cells(cl)
@@ -103,7 +103,7 @@ async def table(spreadsheet_id):
     global agcm
     agc = await agcm.authorize()
     ss = await agc.open_by_key(spreadsheet_id)
-    return await ss.get_title(), "https://docs.google.com/spreadsheets/d/{0}".format(ss.id)
+    return ss.title, "https://docs.google.com/spreadsheets/d/{0}".format(ss.id)
 
 
 async def set_event_analysis(date, event, efficiency, how_time, spreadsheet_id):
@@ -232,8 +232,7 @@ async def add_sheet(spreadsheet_id):
         except: ws = await ss.worksheet("Дневная продуктивность")
 
         cl = []
-        lst = ['Дата', '(1-10) эмоциональная часть', '(Комментарий) эмоциональная часть', '(1-10) физическая часть',
-               '(Комментарий) физическая часть']
+        lst = ['Дата', '(ваши вопросы будут ниже)']
         for i in range(len(lst)):
             cl.append(gspread.cell.Cell(1, i + 1, lst[i]))
         await ws.update_cells(cl)

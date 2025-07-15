@@ -116,8 +116,12 @@ async def my_sheets(message):
     if sh:
         tabl = db.get_id_sheets(message.from_user.id)
         if tabl:
+            if 'None' not in str(db.get_id_calendar(message.from_user.id)):
+                text = f'У вас также задан гугл календарь. Вот его идентификатор доступа - {db.get_id_calendar(message.from_user.id)}. Бот берет оттуда мероприятия для анализа'
+            else:
+                text = 'У вас не задан гугл календарь. Если хотите анализировать еще и свои мероприятия - задайте календарь командой /add_calendar'
             tbl = await table(db.get_id_sheets(message.from_user.id))
-            await bot.send_message(message.from_user.id, f'Ваша таблица называется <b>"{tbl[0]}"</b>\nСсылка - {tbl[1]}')
+            await bot.send_message(message.from_user.id, f'Ваша гугл таблица называется <b>"{tbl[0]}"</b>\nСсылка - {tbl[1]}\n' + text)
         else:
             await bot.send_message(message.from_user.id, 'Бот еще не создал вам гугл таблицу. Чтобы создать '
                                                          'таблицу введите /sheets')
